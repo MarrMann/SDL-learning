@@ -23,12 +23,14 @@
     <ClCompile Include="02_image_on_screen.cpp" />
     <ClCompile Include="03_events.cpp" />
     <ClCompile Include="04_key_presses.cpp" />
+    <ClCompile Include="05_optimized_surface_loading.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="02_image_on_screen.h" />
     <ClInclude Include="03_events.h" />
     <ClInclude Include="04_key_presses.h" />
+    <ClInclude Include="05_optimized_surface_loading.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

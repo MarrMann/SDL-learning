@@ -1,6 +1,6 @@
-#include "04_key_presses.h";
+#include "05_optimized_surface_loading.h";
 
 int main(int argc, char* args[]) {
-  KeyPresses04* program = new KeyPresses04();
-  return program->Run();
+	SurfaceLoading05* program = new SurfaceLoading05();
+	return program->Run();
 }

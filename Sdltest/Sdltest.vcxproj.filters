@@ -30,6 +30,9 @@
     <ClCompile Include="04_key_presses.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="05_optimized_surface_loading.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="02_image_on_screen.h">
@@ -39,6 +42,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="04_key_presses.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="05_optimized_surface_loading.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
