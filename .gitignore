@@ -35,15 +35,6 @@ bld/
 *.VisualState.xml
 TestResult.xml
 
-# Build Results of an ATL Project
-[Dd]ebugPS/
-[Rr]eleasePS/
-dlldata.c
-
-# DNX
-project.lock.json
-artifacts/
-
 *_i.c
 *_p.c
 *_i.h
