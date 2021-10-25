@@ -17,7 +17,7 @@ int KeyPresses04::Run()
 
   _currentSurface = _keyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
   
-  while (isRunning) {
+  while (_isRunning) {
     processEvents();
     SDL_BlitSurface(_currentSurface, NULL, _screenSurface, NULL);
     SDL_UpdateWindowSurface(_window);
@@ -98,7 +98,7 @@ void KeyPresses04::processEvents()
   SDL_Event e;
   while (SDL_PollEvent(&e) != 0) {
     if (e.type == SDL_QUIT) {
-      isRunning = false;
+      _isRunning = false;
     }
     else if (e.type == SDL_KEYDOWN) {
       switch (e.key.keysym.sym) {
@@ -115,7 +115,7 @@ void KeyPresses04::processEvents()
         _currentSurface = _keyPressSurfaces[KEY_PRESS_SURFACE_RIGHT];
         break;
       case SDLK_ESCAPE:
-        isRunning = false;
+        _isRunning = false;
         break;
       default:
         break;

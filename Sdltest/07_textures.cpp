@@ -1,8 +1,8 @@
-#include "05_optimized_surface_loading.h"
+#include "07_textures.h"
 
-SurfaceLoading05::SurfaceLoading05() { }
+Textures07::Textures07() { }
 
-int SurfaceLoading05::Run()
+int Textures07::Run()
 {
     //Startup SDL and create window
     if (!init()) {
@@ -10,9 +10,9 @@ int SurfaceLoading05::Run()
         return -1;
     }
 
-    _currentSurface = loadSurface("05/stretch.bmp");
-    if (!_currentSurface) {
-        printf("Failed to load stretch image");
+    _currentTexture = loadTexture("07/texture.png");
+    if (!_currentTexture) {
+        printf("Failed to load texture!\n");
         return -1;
     }
 
@@ -24,15 +24,14 @@ int SurfaceLoading05::Run()
 
     while (_isRunning) {
         processEvents();
-        SDL_BlitScaled(_currentSurface, NULL, _screenSurface, &stretchRect);
-        SDL_UpdateWindowSurface(_window);
+        render();
     }
 
     close();
     return 0;
 }
 
-bool SurfaceLoading05::init()
+bool Textures07::init()
 {
     //Init SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -50,10 +49,32 @@ bool SurfaceLoading05::init()
 
     //Get window surface
     _screenSurface = SDL_GetWindowSurface(_window);
+
+    //Create renderer
+    _renderer = SDL_CreateRenderer(_window, -0, SDL_RENDERER_ACCELERATED);
+    if (_renderer == NULL) 
+    {
+        printf("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
+        return false;
+    }
+    SDL_SetRenderDrawColor(_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
     return true;
 }
 
-void SurfaceLoading05::processEvents()
+void Textures07::render()
+{
+    //Clear screen
+    SDL_RenderClear(_renderer);
+
+    //Render texture to screen
+    SDL_RenderCopy(_renderer, _currentTexture, NULL, NULL);
+
+    //Update screen
+    SDL_RenderPresent(_renderer);
+}
+
+void Textures07::processEvents()
 {
     SDL_Event e;
     while (SDL_PollEvent(&e) != 0) {
@@ -72,40 +93,43 @@ void SurfaceLoading05::processEvents()
     }
 }
 
-SDL_Surface* SurfaceLoading05::loadSurface(std::string path)
+SDL_Texture* Textures07::loadTexture(std::string path)
 {
     //The final optimized image
-    SDL_Surface* optimizedSurface = NULL;
+    SDL_Texture* newTexture = NULL;
 
     //Load image at specified path
-    SDL_Surface* surface = SDL_LoadBMP(path.c_str());
+    SDL_Surface* surface = IMG_Load(path.c_str());
     if (surface == NULL) {
         printf("Unable to load image %s. SDL error: %s\n", path.c_str(), SDL_GetError());
-        return optimizedSurface;
+        return newTexture;
     }
 
     //Convert surface to screen format
-    optimizedSurface = SDL_ConvertSurface(surface, _screenSurface->format, 0);
-    if (optimizedSurface == NULL) {
+    newTexture = SDL_CreateTextureFromSurface(_renderer, surface);
+    if (newTexture == NULL) {
         printf("Unable to optimize image %s. SDL error: %s\n", path.c_str(), SDL_GetError());
-        return optimizedSurface;
+        return newTexture;
     }
     //Free the old surface
     SDL_FreeSurface(surface);
 
-    return optimizedSurface;
+    return newTexture;
 }
 
-void SurfaceLoading05::close()
+void Textures07::close()
 {
     //Deallocate surface
-    SDL_FreeSurface(_currentSurface);
-    _currentSurface = NULL;
+    SDL_DestroyTexture(_currentTexture);
+    _currentTexture = NULL;
 
     //Destroy window
+    SDL_DestroyRenderer(_renderer);
     SDL_DestroyWindow(_window);
+    _renderer = NULL;
     _window = NULL;
 
     //Quit SDL subsystems
+    IMG_Quit();
     SDL_Quit();
 }

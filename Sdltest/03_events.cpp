@@ -17,7 +17,7 @@ int Events03::Run()
 
   SDL_BlitSurface(_helloWorld, NULL, _screenSurface, NULL);
   SDL_UpdateWindowSurface(_window);
-  while (isRunning) {
+  while (_isRunning) {
     processEvents();
   }
 
@@ -63,10 +63,10 @@ void Events03::processEvents()
   SDL_Event e;
   while (SDL_PollEvent(&e) != 0) {
     if (e.type == SDL_QUIT) {
-      isRunning = false;
+      _isRunning = false;
     }
     if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) {
-      isRunning = false;
+      _isRunning = false;
     }
   }
 }

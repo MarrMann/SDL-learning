@@ -1,11 +1,12 @@
 #include <SDL.h>
+#include <SDL_image.h>
 #include <stdio.h>
 #include <string>
 
-class SurfaceLoading05 {
+class ExtensionLibraries06 {
 
 public:
-    SurfaceLoading05();
+    ExtensionLibraries06();
     int Run();
 
 private:

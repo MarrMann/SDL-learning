@@ -1,6 +1,6 @@
-#include "05_optimized_surface_loading.h";
+#include "sandSim.h";
 
 int main(int argc, char* args[]) {
-	SurfaceLoading05* program = new SurfaceLoading05();
+	SandSim* program = new SandSim();
 	return program->Run();
 }

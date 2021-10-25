@@ -35,7 +35,7 @@ private:
   const static int SCREEN_WIDTH = 640;
   const static int SCREEN_HEIGHT = 480;
 
-  bool isRunning = true;
+  bool _isRunning = true;
   SDL_Window* _window = NULL;
   SDL_Surface* _screenSurface = NULL;
 

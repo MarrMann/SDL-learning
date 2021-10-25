@@ -19,7 +19,7 @@ private:
   //Frees media and shuts down SDL
   void close();
 
-  bool isRunning = true;
+  bool _isRunning = true;
   SDL_Window* _window = NULL;
   SDL_Surface* _screenSurface = NULL;
   SDL_Surface* _helloWorld = NULL;

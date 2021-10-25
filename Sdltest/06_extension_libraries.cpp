@@ -1,8 +1,8 @@
-#include "05_optimized_surface_loading.h"
+#include "06_extension_libraries.h"
 
-SurfaceLoading05::SurfaceLoading05() { }
+ExtensionLibraries06::ExtensionLibraries06() { }
 
-int SurfaceLoading05::Run()
+int ExtensionLibraries06::Run()
 {
     //Startup SDL and create window
     if (!init()) {
@@ -10,7 +10,7 @@ int SurfaceLoading05::Run()
         return -1;
     }
 
-    _currentSurface = loadSurface("05/stretch.bmp");
+    _currentSurface = loadSurface("06/loaded.png");
     if (!_currentSurface) {
         printf("Failed to load stretch image");
         return -1;
@@ -32,7 +32,7 @@ int SurfaceLoading05::Run()
     return 0;
 }
 
-bool SurfaceLoading05::init()
+bool ExtensionLibraries06::init()
 {
     //Init SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -53,7 +53,7 @@ bool SurfaceLoading05::init()
     return true;
 }
 
-void SurfaceLoading05::processEvents()
+void ExtensionLibraries06::processEvents()
 {
     SDL_Event e;
     while (SDL_PollEvent(&e) != 0) {
@@ -72,13 +72,13 @@ void SurfaceLoading05::processEvents()
     }
 }
 
-SDL_Surface* SurfaceLoading05::loadSurface(std::string path)
+SDL_Surface* ExtensionLibraries06::loadSurface(std::string path)
 {
     //The final optimized image
     SDL_Surface* optimizedSurface = NULL;
 
     //Load image at specified path
-    SDL_Surface* surface = SDL_LoadBMP(path.c_str());
+    SDL_Surface* surface = IMG_Load(path.c_str());
     if (surface == NULL) {
         printf("Unable to load image %s. SDL error: %s\n", path.c_str(), SDL_GetError());
         return optimizedSurface;
@@ -96,7 +96,7 @@ SDL_Surface* SurfaceLoading05::loadSurface(std::string path)
     return optimizedSurface;
 }
 
-void SurfaceLoading05::close()
+void ExtensionLibraries06::close()
 {
     //Deallocate surface
     SDL_FreeSurface(_currentSurface);
