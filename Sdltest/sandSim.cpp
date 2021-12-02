@@ -1,4 +1,5 @@
 #include "sandSim.h"
+#include <iostream>
 
 SandSim::SandSim() { }
 
@@ -54,16 +55,11 @@ bool SandSim::init()
                 {x, y},
                 0
             };
-            _points2[y * SCREEN_WIDTH + x] = {
-                {x, y},
-                0
-            };
         }
     }
 
     //Set active buffers
-    _activePointBuffer = _points1;
-    _backPointBuffer = _points2;
+    _particleGrid = _points1;
 
     return true;
 }
@@ -78,9 +74,18 @@ void SandSim::render()
     SDL_SetRenderDrawColor(_renderer, 0xE5, 0xDD, 0xD1, 0xFF);
     for (int i = 0; i < SCREEN_HEIGHT * SCREEN_WIDTH; i++)
     {
-        if (_activePointBuffer[i].state) 
-        {
-            SDL_RenderDrawPoint(_renderer, _activePointBuffer[i].p.x, _activePointBuffer[i].p.y);
+        unsigned char particleId = _particleGrid[i].id;
+        switch (particleId) {
+        case P_SAND:
+            SDL_SetRenderDrawColor(_renderer, 0xE5, 0xDD, 0xD1, 0xFF);
+            SDL_RenderDrawPoint(_renderer, _particleGrid[i].p.x, _particleGrid[i].p.y);
+            break;
+        case P_WATER:
+            SDL_SetRenderDrawColor(_renderer, 0x00, 0x00, 0xFF, 0xFF);
+            SDL_RenderDrawPoint(_renderer, _particleGrid[i].p.x, _particleGrid[i].p.y);
+            break;
+        default:
+            break;
         }
     }
 
@@ -94,84 +99,164 @@ void SandSim::processEvents()
         if (e.type == SDL_QUIT) {
             _isRunning = false;
         }
+        else if (e.type == SDL_MOUSEBUTTONDOWN) {
+            switch (e.button.button) {
+            case SDL_BUTTON_LEFT:
+                lDown = true;
+                break;
+            case SDL_BUTTON_RIGHT:
+                rDown = true;
+                break;
+            }
+        }
+        else if (e.type == SDL_MOUSEBUTTONUP) {
+            switch (e.button.button) {
+            case SDL_BUTTON_LEFT:
+                lDown = false;
+                break;
+            case SDL_BUTTON_RIGHT:
+                rDown = false;
+                break;
+            }
+        }
         else if (e.type == SDL_KEYDOWN) {
             switch (e.key.keysym.sym) {
             case SDLK_ESCAPE:
                 _isRunning = false;
                 break;
             case SDLK_SPACE:
-                for (int x = -5; x < 5; x++)
-                {
-                    for (int y = -5; y < 5; y++)
-                    {
-                        _activePointBuffer[(SCREEN_HEIGHT / 2 + y) * SCREEN_WIDTH + (SCREEN_WIDTH / 2 + x)].state = 1;
-                    }
-                }
+                int mouseX, mouseY;
+                SDL_GetMouseState(&mouseX, &mouseY);
+                _particleGrid[mouseY * SCREEN_WIDTH + mouseX].id = P_SAND;
                 break;
             default:
                 break;
             }
         }
     }
+    if (lDown) {
+        int mouseX, mouseY;
+        SDL_GetMouseState(&mouseX, &mouseY);
+        for (int x = -2; x < 3; x++) 
+        {
+            for (int y = -2; y < 3; y++) 
+            {
+                _particleGrid[(mouseY + y) * SCREEN_WIDTH + (mouseX + x)].id = P_SAND;
+            }
+        }
+        //_particleGrid[mouseY * SCREEN_WIDTH + mouseX].id = P_SAND;
+    }
+    else if (rDown) {
+        int mouseX, mouseY;
+        SDL_GetMouseState(&mouseX, &mouseY);
+        for (int x = -2; x < 3; x++)
+        {
+            for (int y = -2; y < 3; y++)
+            {
+                _particleGrid[(mouseY + y) * SCREEN_WIDTH + (mouseX + x)].id = P_WATER;
+            }
+        }
+        //_particleGrid[mouseY * SCREEN_WIDTH + mouseX].id = P_WATER;
+    }
 }
 
 void SandSim::simulate()
 {
-    int count = 0;
+    Uint32 ticks = SDL_GetTicks();
+    int startX, startY, endX, endY, dirX, dirY;
+    if (simLeft) {
+        startX = 0; endX = SCREEN_WIDTH; dirX = 1;
+        startY = SCREEN_HEIGHT - 1; endY = -1; dirY = -1;
+    }
+    else {
+        startX = SCREEN_WIDTH - 1; endX = -1; dirX = -1;
+        startY = SCREEN_HEIGHT - 1; endY = -1; dirY = -1;
+    }
+    simLeft = !simLeft;
+
     //for (int y = 0; y < SCREEN_HEIGHT; y++)
+    int dir = 1;
+    for (int y = startY; y != endY; y += dirY)
+    {
+        for (int x = startX; x != endX; x += dirX)
+        {
+            if (getParticle(x, y)->hasUpdated) {
+                continue;
+            }
+
+            char particleId = getParticle(x, y)->id;
+            switch (particleId)
+            {
+            case P_SAND:
+                updateSand(x, y, dir);
+                break;
+            case P_WATER:
+                updateWater(x, y);
+                break;
+            default:
+                break;
+            }
+        }
+    }
+
     for (int y = SCREEN_HEIGHT - 1; y >= 0; y--)
     {
         for (int x = 0; x < SCREEN_WIDTH; x++)
         {
-            if (_activePointBuffer[y * SCREEN_WIDTH + x].state == 1) {
-                count++;
-                if (y < SCREEN_HEIGHT - 1)
-                {
-                    if (_activePointBuffer[(y + 1) * SCREEN_WIDTH + x].state != 1) 
-                    {
-                        _activePointBuffer[y * SCREEN_WIDTH + x].state= 0;
-                        _activePointBuffer[(y + 1) * SCREEN_WIDTH + x].state = 1;
-                        continue;
-                    }
-                    
-                    if (rand() % 2)
-                    {
-                        if (checkRight(_activePointBuffer, x, y))
-                        {
-                            checkLeft(_activePointBuffer, x, y);
-                        }
-                    }
-                    else
-                    {
-                        if (!checkLeft(_activePointBuffer, x, y))
-                        {
-                            checkRight(_activePointBuffer, x, y);
-                        }
-                    }
-                }
-            }
+            getParticle(x, y)->hasUpdated = false;
         }
     }
 }
 
-bool SandSim::checkLeft(Point* buffer, int x, int y)
+void SandSim::updateSand(int x, int y, int dir)
 {
-    if (x > 0 && buffer[(y + 1) * SCREEN_WIDTH + x - 1].state != 1) {
-        buffer[y * SCREEN_WIDTH + x].state = 0;
-        buffer[(y + 1) * SCREEN_WIDTH + x - 1].state = 1;
-        return true;
+    Particle* p = getParticle(x, y);
+    
+    if (getParticle(x, y + 1)->id == P_EMPTY) {
+        getParticle(x, y + 1)->id = P_SAND;
+        getParticle(x, y + 1)->hasUpdated = true;
+        p->id = P_EMPTY;
     }
-    return false;
+    else if (getParticle(x + dir, y + 1)->id == P_EMPTY) {
+        getParticle(x + dir, y + 1)->id = P_SAND;
+        getParticle(x + dir, y + 1)->hasUpdated = true;
+        p->id = P_EMPTY;
+    }
+    else if (getParticle(x - dir, y + 1)->id == P_EMPTY) {
+        getParticle(x -dir, y + 1)->id = P_SAND;
+        getParticle(x -dir, y + 1)->hasUpdated = true;
+        p->id = P_EMPTY;
+    }
 }
 
-bool SandSim::checkRight(Point* buffer, int x, int y)
+void SandSim::updateWater(int x, int y)
 {
-    if (x < SCREEN_WIDTH - 1 && buffer[(y + 1) * SCREEN_WIDTH + x + 1].state != 1) {
-        buffer[y * SCREEN_WIDTH + x].state = 0;
-        buffer[(y + 1) * SCREEN_WIDTH + x + 1].state = 1;
-        return true;
+    Particle* p = getParticle(x, y);
+    if (getParticle(x, y + 1)->id == P_EMPTY) {
+        getParticle(x, y + 1)->id = P_WATER;
+        getParticle(x, y + 1)->hasUpdated = true;
+        p->id = P_EMPTY;
     }
-    return false;
+    else if (getParticle(x - 1, y + 1)->id == P_EMPTY) {
+        getParticle(x - 1, y + 1)->id = P_WATER;
+        getParticle(x - 1, y + 1)->hasUpdated = true;
+        p->id = P_EMPTY;
+    }
+    else if (getParticle(x + 1, y + 1)->id == P_EMPTY) {
+        getParticle(x + 1, y + 1)->id = P_WATER;
+        getParticle(x + 1, y + 1)->hasUpdated = true;
+        p->id = P_EMPTY;
+    }
+    else if (getParticle(x - 1, y)->id == P_EMPTY) {
+        getParticle(x - 1, y)->id = P_WATER;
+        getParticle(x - 1, y)->hasUpdated = true;
+        p->id = P_EMPTY;
+    }
+    else if (getParticle(x + 1, y)->id == P_EMPTY) {
+        getParticle(x + 1, y)->id = P_WATER;
+        getParticle(x + 1, y)->hasUpdated = true;
+        p->id = P_EMPTY;
+    }
 }
 
 void SandSim::close()
@@ -187,24 +272,15 @@ void SandSim::close()
     SDL_Quit();
 }
 
-void SandSim::swapPointBuffer()
-{
-    if (_isBackBufferActive) {
-        _activePointBuffer = _points1;
-        _backPointBuffer = _points2;
-    }
-    else {
-        _activePointBuffer = _points2;
-        _backPointBuffer = _points1;
-    }
-    clearBuffer(_backPointBuffer, SCREEN_WIDTH * SCREEN_HEIGHT);
-    _isBackBufferActive = !_isBackBufferActive;
-}
-
-void SandSim::clearBuffer(Point* buffer, int size)
+void SandSim::clearBuffer(Particle* buffer, int size)
 {
     for (int i = 0; i < size; i++)
     {
-        buffer[i].state = 0;
+        buffer[i].id = P_EMPTY;
     }
+}
+
+SandSim::Particle* SandSim::getParticle(int x, int y)
+{
+    return &_particleGrid[y * SCREEN_WIDTH + x];
 }

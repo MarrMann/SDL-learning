@@ -5,9 +5,19 @@
 
 class SandSim {
 
-    struct Point {
+    enum ParticleTypes {
+        P_EMPTY = 0,
+        P_SAND,
+        P_WATER
+    };
+
+    struct Particle {
         SDL_Point p;
-        int state = 0;
+        SDL_Point velocity;
+        SDL_Color color;
+        unsigned char id;
+        float lifetime;
+        bool hasUpdated;
     };
 
 public:
@@ -26,16 +36,16 @@ private:
 
     //Simulate pixels
     void simulate();
-    bool checkLeft(Point* buffer, int x, int y);
-    bool checkRight(Point* buffer, int x, int y);
+
+    void updateSand(int x, int y, int dir);
+    void updateWater(int x, int y);
 
     //Frees media and shuts down SDL
     void close();
 
-    //Swap buffer array;
-    void swapPointBuffer();
+    void clearBuffer(Particle* buffer, int size);
 
-    void clearBuffer(Point* buffer, int size);
+    Particle* getParticle(int x, int y);
 
     const static int SCREEN_WIDTH = 640;
     const static int SCREEN_HEIGHT = 480;
@@ -48,10 +58,13 @@ private:
     SDL_Renderer* _renderer = NULL;
 
     //Array pointers
-    Point* _activePointBuffer;
-    Point* _backPointBuffer;
+    Particle* _particleGrid;
 
     //Point array
-    Point _points1[SCREEN_HEIGHT * SCREEN_WIDTH];
-    Point _points2[SCREEN_HEIGHT * SCREEN_WIDTH];
+    Particle _points1[SCREEN_HEIGHT * SCREEN_WIDTH];
+    Particle _points2[SCREEN_HEIGHT * SCREEN_WIDTH];
+
+    bool simLeft;
+    bool lDown;
+    bool rDown;
 };
