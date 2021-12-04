@@ -23,6 +23,8 @@ int SandSim::Run()
 
 bool SandSim::init()
 {
+    _scale = 3;
+
     //Init SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -30,7 +32,7 @@ bool SandSim::init()
     }
 
     //Create window
-    _window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    _window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH * _scale, SCREEN_HEIGHT * _scale, SDL_WINDOW_SHOWN);
     if (_window == NULL)
     {
         printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -71,7 +73,8 @@ void SandSim::render()
     //Clear screen
     SDL_RenderClear(_renderer);
 
-    SDL_SetRenderDrawColor(_renderer, 0xE5, 0xDD, 0xD1, 0xFF);
+    SDL_RenderSetScale(_renderer, _scale, _scale);
+
     for (int i = 0; i < SCREEN_HEIGHT * SCREEN_WIDTH; i++)
     {
         unsigned char particleId = _particleGrid[i].id;
@@ -102,20 +105,20 @@ void SandSim::processEvents()
         else if (e.type == SDL_MOUSEBUTTONDOWN) {
             switch (e.button.button) {
             case SDL_BUTTON_LEFT:
-                lDown = true;
+                _lDown = true;
                 break;
             case SDL_BUTTON_RIGHT:
-                rDown = true;
+                _rDown = true;
                 break;
             }
         }
         else if (e.type == SDL_MOUSEBUTTONUP) {
             switch (e.button.button) {
             case SDL_BUTTON_LEFT:
-                lDown = false;
+                _lDown = false;
                 break;
             case SDL_BUTTON_RIGHT:
-                rDown = false;
+                _rDown = false;
                 break;
             }
         }
@@ -134,29 +137,20 @@ void SandSim::processEvents()
             }
         }
     }
-    if (lDown) {
+    if (_lDown || _rDown) {
+        char type = _lDown ? P_SAND : P_WATER;
         int mouseX, mouseY;
         SDL_GetMouseState(&mouseX, &mouseY);
+        mouseX /= _scale;
+        mouseY /= _scale;
         for (int x = -2; x < 3; x++) 
         {
             for (int y = -2; y < 3; y++) 
             {
-                _particleGrid[(mouseY + y) * SCREEN_WIDTH + (mouseX + x)].id = P_SAND;
+                _particleGrid[(mouseY + y) * SCREEN_WIDTH + (mouseX + x)].id = type;
             }
         }
         //_particleGrid[mouseY * SCREEN_WIDTH + mouseX].id = P_SAND;
-    }
-    else if (rDown) {
-        int mouseX, mouseY;
-        SDL_GetMouseState(&mouseX, &mouseY);
-        for (int x = -2; x < 3; x++)
-        {
-            for (int y = -2; y < 3; y++)
-            {
-                _particleGrid[(mouseY + y) * SCREEN_WIDTH + (mouseX + x)].id = P_WATER;
-            }
-        }
-        //_particleGrid[mouseY * SCREEN_WIDTH + mouseX].id = P_WATER;
     }
 }
 
@@ -164,20 +158,20 @@ void SandSim::simulate()
 {
     Uint32 ticks = SDL_GetTicks();
     int startX, startY, endX, endY, dirX, dirY;
-    if (simLeft) {
-        startX = 0; endX = SCREEN_WIDTH; dirX = 1;
-        startY = SCREEN_HEIGHT - 1; endY = -1; dirY = -1;
-    }
-    else {
-        startX = SCREEN_WIDTH - 1; endX = -1; dirX = -1;
-        startY = SCREEN_HEIGHT - 1; endY = -1; dirY = -1;
-    }
-    simLeft = !simLeft;
+    startY = SCREEN_HEIGHT - 1; endY = -1; dirY = -1;
+    _simDir = rand() % 2 ? 1 : -1;
 
     //for (int y = 0; y < SCREEN_HEIGHT; y++)
-    int dir = 1;
     for (int y = startY; y != endY; y += dirY)
     {
+        if (_simLeft) {
+            startX = 0; endX = SCREEN_WIDTH; dirX = 1;
+        }
+        else {
+            startX = SCREEN_WIDTH - 1; endX = -1; dirX = -1;
+        }
+        _simLeft = !_simLeft;
+
         for (int x = startX; x != endX; x += dirX)
         {
             if (getParticle(x, y)->hasUpdated) {
@@ -188,7 +182,7 @@ void SandSim::simulate()
             switch (particleId)
             {
             case P_SAND:
-                updateSand(x, y, dir);
+                updateSand(x, y);
                 break;
             case P_WATER:
                 updateWater(x, y);
@@ -208,7 +202,7 @@ void SandSim::simulate()
     }
 }
 
-void SandSim::updateSand(int x, int y, int dir)
+void SandSim::updateSand(int x, int y)
 {
     Particle* p = getParticle(x, y);
     
@@ -217,14 +211,14 @@ void SandSim::updateSand(int x, int y, int dir)
         getParticle(x, y + 1)->hasUpdated = true;
         p->id = P_EMPTY;
     }
-    else if (getParticle(x + dir, y + 1)->id == P_EMPTY) {
-        getParticle(x + dir, y + 1)->id = P_SAND;
-        getParticle(x + dir, y + 1)->hasUpdated = true;
+    else if (getParticle(x + _simDir, y + 1)->id == P_EMPTY) {
+        getParticle(x + _simDir, y + 1)->id = P_SAND;
+        getParticle(x + _simDir, y + 1)->hasUpdated = true;
         p->id = P_EMPTY;
     }
-    else if (getParticle(x - dir, y + 1)->id == P_EMPTY) {
-        getParticle(x -dir, y + 1)->id = P_SAND;
-        getParticle(x -dir, y + 1)->hasUpdated = true;
+    else if (getParticle(x - _simDir, y + 1)->id == P_EMPTY) {
+        getParticle(x - _simDir, y + 1)->id = P_SAND;
+        getParticle(x - _simDir, y + 1)->hasUpdated = true;
         p->id = P_EMPTY;
     }
 }
@@ -237,24 +231,24 @@ void SandSim::updateWater(int x, int y)
         getParticle(x, y + 1)->hasUpdated = true;
         p->id = P_EMPTY;
     }
-    else if (getParticle(x - 1, y + 1)->id == P_EMPTY) {
-        getParticle(x - 1, y + 1)->id = P_WATER;
-        getParticle(x - 1, y + 1)->hasUpdated = true;
+    else if (getParticle(x - _simDir, y + 1)->id == P_EMPTY) {
+        getParticle(x - _simDir, y + 1)->id = P_WATER;
+        getParticle(x - _simDir, y + 1)->hasUpdated = true;
         p->id = P_EMPTY;
     }
-    else if (getParticle(x + 1, y + 1)->id == P_EMPTY) {
-        getParticle(x + 1, y + 1)->id = P_WATER;
-        getParticle(x + 1, y + 1)->hasUpdated = true;
+    else if (getParticle(x + _simDir, y + 1)->id == P_EMPTY) {
+        getParticle(x + _simDir, y + 1)->id = P_WATER;
+        getParticle(x + _simDir, y + 1)->hasUpdated = true;
         p->id = P_EMPTY;
     }
-    else if (getParticle(x - 1, y)->id == P_EMPTY) {
-        getParticle(x - 1, y)->id = P_WATER;
-        getParticle(x - 1, y)->hasUpdated = true;
+    else if (getParticle(x - _simDir, y)->id == P_EMPTY) {
+        getParticle(x - _simDir, y)->id = P_WATER;
+        getParticle(x - _simDir, y)->hasUpdated = true;
         p->id = P_EMPTY;
     }
-    else if (getParticle(x + 1, y)->id == P_EMPTY) {
-        getParticle(x + 1, y)->id = P_WATER;
-        getParticle(x + 1, y)->hasUpdated = true;
+    else if (getParticle(x + _simDir, y)->id == P_EMPTY) {
+        getParticle(x + _simDir, y)->id = P_WATER;
+        getParticle(x + _simDir, y)->hasUpdated = true;
         p->id = P_EMPTY;
     }
 }

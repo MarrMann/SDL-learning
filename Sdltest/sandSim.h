@@ -3,13 +3,11 @@
 #include <stdio.h>
 #include <string>
 
-class SandSim {
+#define P_EMPTY 0
+#define P_SAND 1
+#define P_WATER 2
 
-    enum ParticleTypes {
-        P_EMPTY = 0,
-        P_SAND,
-        P_WATER
-    };
+class SandSim {
 
     struct Particle {
         SDL_Point p;
@@ -37,7 +35,7 @@ private:
     //Simulate pixels
     void simulate();
 
-    void updateSand(int x, int y, int dir);
+    void updateSand(int x, int y);
     void updateWater(int x, int y);
 
     //Frees media and shuts down SDL
@@ -48,7 +46,7 @@ private:
     Particle* getParticle(int x, int y);
 
     const static int SCREEN_WIDTH = 640;
-    const static int SCREEN_HEIGHT = 480;
+    const static int SCREEN_HEIGHT = 320;
 
     bool _isRunning = true;
     bool _isBackBufferActive = false;
@@ -64,7 +62,9 @@ private:
     Particle _points1[SCREEN_HEIGHT * SCREEN_WIDTH];
     Particle _points2[SCREEN_HEIGHT * SCREEN_WIDTH];
 
-    bool simLeft;
-    bool lDown;
-    bool rDown;
+    int _scale;
+    char _simDir;
+    bool _simLeft;
+    bool _lDown;
+    bool _rDown;
 };
