@@ -27,6 +27,7 @@
     <ClCompile Include="06_extension_libraries.cpp" />
     <ClCompile Include="07_textures.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mathUtils.cpp" />
     <ClCompile Include="sandSim.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -36,6 +37,7 @@
     <ClInclude Include="05_optimized_surface_loading.h" />
     <ClInclude Include="06_extension_libraries.h" />
     <ClInclude Include="07_textures.h" />
+    <ClInclude Include="mathUtils.h" />
     <ClInclude Include="sandSim.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

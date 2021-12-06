@@ -42,6 +42,9 @@
     <ClCompile Include="sandSim.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mathUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="02_image_on_screen.h">
@@ -63,6 +66,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sandSim.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mathUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

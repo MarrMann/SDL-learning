@@ -2,6 +2,8 @@
 #include <SDL_image.h>
 #include <stdio.h>
 #include <string>
+#include <utility>
+#include "mathUtils.h"
 
 #define P_EMPTY 0
 #define P_SAND 1
@@ -11,11 +13,12 @@ class SandSim {
 
     struct Particle {
         SDL_Point p;
-        SDL_Point velocity;
-        SDL_Color color;
         unsigned char id;
+        SDL_Color color;
+        SDL_Point velocity;
         float lifetime;
         bool hasUpdated;
+        bool isLiquidOrGas;
     };
 
 public:
@@ -37,6 +40,7 @@ private:
 
     void updateSand(int x, int y);
     void updateWater(int x, int y);
+    void swapParticles(Particle *p1, Particle* p2);
 
     //Frees media and shuts down SDL
     void close();
@@ -44,6 +48,7 @@ private:
     void clearBuffer(Particle* buffer, int size);
 
     Particle* getParticle(int x, int y);
+    int getArrayPosition(int x, int y);
 
     const static int SCREEN_WIDTH = 640;
     const static int SCREEN_HEIGHT = 320;
