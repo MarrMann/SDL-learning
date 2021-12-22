@@ -38,8 +38,9 @@ private:
     //Simulate pixels
     void simulate();
 
-    void updateSand(int x, int y);
-    void updateWater(int x, int y);
+    void updateParticle(int x, int y);
+    bool updateSand(int x, int y, Particle** outParticle);
+    bool updateWater(int x, int y, Particle** outParticle);
     void swapParticles(Particle *p1, Particle* p2);
 
     //Frees media and shuts down SDL
@@ -47,11 +48,11 @@ private:
 
     void clearBuffer(Particle* buffer, int size);
 
-    Particle* getParticle(int x, int y);
+    bool tryGetParticle(int x, int y, Particle** outParticle);
     int getArrayPosition(int x, int y);
 
-    const static int SCREEN_WIDTH = 640;
-    const static int SCREEN_HEIGHT = 320;
+    const static int SCREEN_WIDTH = 320;
+    const static int SCREEN_HEIGHT = 160;
 
     bool _isRunning = true;
     bool _isBackBufferActive = false;
