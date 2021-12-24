@@ -79,7 +79,7 @@ void SandSim::render()
     for (int i = 0; i < SCREEN_HEIGHT * SCREEN_WIDTH; i++)
     {
         Particle particle = _particleGrid[i];
-        if (particle.id == P_EMPTY) {
+        if (!particle.hasUpdated) {
             continue;
         }
 
@@ -174,6 +174,16 @@ void SandSim::simulate()
     startY = SCREEN_HEIGHT - 1; endY = -1; dirY = -1;
     _simDir = rand() % 2 ? 1 : -1;
 
+    for (int y = SCREEN_HEIGHT - 1; y >= 0; y--)
+    {
+        for (int x = 0; x < SCREEN_WIDTH; x++)
+        {
+            Particle* p = &_particleGrid[0];
+            tryGetParticle(x, y, &p);
+            p->hasUpdated = false;
+        }
+    }
+
     //for (int y = 0; y < SCREEN_HEIGHT; y++)
     for (int y = startY; y != endY; y += dirY)
     {
@@ -190,16 +200,6 @@ void SandSim::simulate()
             updateParticle(x, y);
         }
     }
-
-    for (int y = SCREEN_HEIGHT - 1; y >= 0; y--)
-    {
-        for (int x = 0; x < SCREEN_WIDTH; x++)
-        {
-            Particle* p = &_particleGrid[0];
-            tryGetParticle(x, y, &p);
-            p->hasUpdated = false;
-        }
-    }
 }
 
 void SandSim::updateParticle(int x, int y)
@@ -210,29 +210,30 @@ void SandSim::updateParticle(int x, int y)
         return;
     }
 
+    bool didUpdate = false;
     switch (p->id)
     {
     case P_SAND:
-        if (!updateSand(x, y, &p2)) {
-            return;
-        }
+        didUpdate = updateSand(x, y, &p2);
         break;
     case P_WATER:
-        if (!updateWater(x, y, &p2)) {
-            return;
-        }
+        didUpdate = updateWater(x, y, &p2);
         break;
     default:
         return;
     }
 
-    swapParticles(p, p2);
-    p2->hasUpdated = true;
+    if (didUpdate) {
+        swapParticles(p, p2);
+        p2->hasUpdated = true;
+        return;
+    }
+    p->hasUpdated = true;
 }
 
 bool SandSim::updateSand(int x, int y, Particle** outParticle)
 {
-    *outParticle = &_particleGrid[0];
+    *outParticle = &_particleGrid[y * SCREEN_WIDTH + x];
     if (tryGetParticle(x, y + 1, outParticle) && (*outParticle)->isLiquidOrGas) return true;
     if (tryGetParticle(x + _simDir, y + 1, outParticle) && (*outParticle)->isLiquidOrGas) return true;
     if (tryGetParticle(x - _simDir, y + 1, outParticle) && (*outParticle)->isLiquidOrGas) return true;
@@ -241,7 +242,7 @@ bool SandSim::updateSand(int x, int y, Particle** outParticle)
 
 bool SandSim::updateWater(int x, int y, Particle** outParticle)
 {
-    *outParticle = &_particleGrid[0];
+    *outParticle = &_particleGrid[y * SCREEN_WIDTH + x];
     if (tryGetParticle(x, y + 1, outParticle) && (*outParticle)->id == P_EMPTY) return true;
     if (tryGetParticle(x + _simDir, y + 1, outParticle) && (*outParticle)->id == P_EMPTY) return true;
     if (tryGetParticle(x - _simDir, y + 1, outParticle) && (*outParticle)->id == P_EMPTY) return true;
