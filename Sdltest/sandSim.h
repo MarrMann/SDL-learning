@@ -51,8 +51,8 @@ private:
     bool tryGetParticle(int x, int y, Particle** outParticle);
     int getArrayPosition(int x, int y);
 
-    const static int SCREEN_WIDTH = 640;
-    const static int SCREEN_HEIGHT = 320;
+    const static int SCREEN_WIDTH = 320;
+    const static int SCREEN_HEIGHT = 180;
 
     bool _isRunning = true;
     bool _isBackBufferActive = false;
