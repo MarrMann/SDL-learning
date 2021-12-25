@@ -27,6 +27,7 @@
     <ClCompile Include="06_extension_libraries.cpp" />
     <ClCompile Include="07_textures.cpp" />
     <ClCompile Include="08_primitives.cpp" />
+    <ClCompile Include="09_viewport.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mathUtils.cpp" />
     <ClCompile Include="sandSim.cpp" />
@@ -39,6 +40,7 @@
     <ClInclude Include="06_extension_libraries.h" />
     <ClInclude Include="07_textures.h" />
     <ClInclude Include="08_primitives.h" />
+    <ClInclude Include="09_viewport.h" />
     <ClInclude Include="mathUtils.h" />
     <ClInclude Include="sandSim.h" />
   </ItemGroup>

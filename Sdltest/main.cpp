@@ -1,6 +1,6 @@
-#include "08_primitives.h";
+#include "09_viewport.h";
 
 int main(int argc, char* args[]) {
-	Primitives08* program = new Primitives08();
+	Viewport09* program = new Viewport09();
 	return program->Run();
 }
