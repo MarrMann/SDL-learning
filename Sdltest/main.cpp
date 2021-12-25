@@ -1,6 +1,6 @@
-#include "sandSim.h";
+#include "08_primitives.h";
 
 int main(int argc, char* args[]) {
-	SandSim* program = new SandSim();
+	Primitives08* program = new Primitives08();
 	return program->Run();
 }
