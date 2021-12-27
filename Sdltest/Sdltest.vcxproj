@@ -28,6 +28,8 @@
     <ClCompile Include="07_textures.cpp" />
     <ClCompile Include="08_primitives.cpp" />
     <ClCompile Include="09_viewport.cpp" />
+    <ClCompile Include="10_color_keying.cpp" />
+    <ClCompile Include="lTexture.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mathUtils.cpp" />
     <ClCompile Include="sandSim.cpp" />
@@ -41,6 +43,8 @@
     <ClInclude Include="07_textures.h" />
     <ClInclude Include="08_primitives.h" />
     <ClInclude Include="09_viewport.h" />
+    <ClInclude Include="10_color_keying.h" />
+    <ClInclude Include="lTexture.h" />
     <ClInclude Include="mathUtils.h" />
     <ClInclude Include="sandSim.h" />
   </ItemGroup>

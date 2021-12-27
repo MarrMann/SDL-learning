@@ -1,6 +1,6 @@
-#include "09_viewport.h";
+#include "10_color_keying.h";
 
 int main(int argc, char* args[]) {
-	Viewport09* program = new Viewport09();
+	ColorKeying10* program = new ColorKeying10();
 	return program->Run();
 }

@@ -51,6 +51,12 @@
     <ClCompile Include="09_viewport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="10_color_keying.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="02_image_on_screen.h">
@@ -81,6 +87,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="09_viewport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="10_color_keying.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lTexture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
