@@ -1,6 +1,6 @@
-#include "10_color_keying.h";
+#include "11_clip_rendering.h";
 
 int main(int argc, char* args[]) {
-	ColorKeying10* program = new ColorKeying10();
+	ClipRendering11* program = new ClipRendering11();
 	return program->Run();
 }

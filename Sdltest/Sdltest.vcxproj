@@ -29,6 +29,7 @@
     <ClCompile Include="08_primitives.cpp" />
     <ClCompile Include="09_viewport.cpp" />
     <ClCompile Include="10_color_keying.cpp" />
+    <ClCompile Include="11_clip_rendering.cpp" />
     <ClCompile Include="lTexture.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mathUtils.cpp" />
@@ -44,6 +45,7 @@
     <ClInclude Include="08_primitives.h" />
     <ClInclude Include="09_viewport.h" />
     <ClInclude Include="10_color_keying.h" />
+    <ClInclude Include="11_clip_rendering.h" />
     <ClInclude Include="lTexture.h" />
     <ClInclude Include="mathUtils.h" />
     <ClInclude Include="sandSim.h" />
