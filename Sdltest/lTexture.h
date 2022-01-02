@@ -17,6 +17,8 @@ public:
     //Deallocates texture
     void free();
 
+    void setColor(Uint8 r, Uint8 g, Uint8 b);
+
     //Renders texture at given point
     void render(int x, int y, SDL_Rect* clip = NULL);
 

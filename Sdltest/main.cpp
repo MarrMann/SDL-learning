@@ -1,6 +1,6 @@
-#include "11_clip_rendering.h";
+#include "12_color_modulation.h";
 
 int main(int argc, char* args[]) {
-	ClipRendering11* program = new ClipRendering11();
+	ColorModulation12* program = new ColorModulation12();
 	return program->Run();
 }

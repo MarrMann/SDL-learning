@@ -60,6 +60,9 @@
     <ClCompile Include="11_clip_rendering.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="12_color_modulation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="02_image_on_screen.h">
@@ -99,6 +102,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="11_clip_rendering.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="12_color_modulation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
