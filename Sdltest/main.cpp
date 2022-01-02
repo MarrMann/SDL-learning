@@ -1,6 +1,6 @@
-#include "12_color_modulation.h";
+#include "13_alpha_blending.h";
 
 int main(int argc, char* args[]) {
-	ColorModulation12* program = new ColorModulation12();
+	AlphaBlending13* program = new AlphaBlending13();
 	return program->Run();
 }

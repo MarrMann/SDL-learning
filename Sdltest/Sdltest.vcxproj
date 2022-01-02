@@ -31,6 +31,7 @@
     <ClCompile Include="10_color_keying.cpp" />
     <ClCompile Include="11_clip_rendering.cpp" />
     <ClCompile Include="12_color_modulation.cpp" />
+    <ClCompile Include="13_alpha_blending.cpp" />
     <ClCompile Include="lTexture.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mathUtils.cpp" />
@@ -48,6 +49,7 @@
     <ClInclude Include="10_color_keying.h" />
     <ClInclude Include="11_clip_rendering.h" />
     <ClInclude Include="12_color_modulation.h" />
+    <ClInclude Include="13_alpha_blending.h" />
     <ClInclude Include="lTexture.h" />
     <ClInclude Include="mathUtils.h" />
     <ClInclude Include="sandSim.h" />

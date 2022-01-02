@@ -17,7 +17,14 @@ public:
     //Deallocates texture
     void free();
 
+    //Set color modulation
     void setColor(Uint8 r, Uint8 g, Uint8 b);
+
+    //Set blending mode
+    void setBlendMode(SDL_BlendMode blendMode);
+
+    //Set alpha modulation (transparency)
+    void setAlpha(Uint8 a);
 
     //Renders texture at given point
     void render(int x, int y, SDL_Rect* clip = NULL);
