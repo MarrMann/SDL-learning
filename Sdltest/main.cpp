@@ -1,6 +1,6 @@
-#include "13_alpha_blending.h";
+#include "14_animated_sprites.h";
 
 int main(int argc, char* args[]) {
-	AlphaBlending13* program = new AlphaBlending13();
+	AnimatedSprites14* program = new AnimatedSprites14();
 	return program->Run();
 }
