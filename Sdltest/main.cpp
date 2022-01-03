@@ -1,6 +1,6 @@
-#include "14_animated_sprites.h";
+#include "15_rotation.h";
 
 int main(int argc, char* args[]) {
-	AnimatedSprites14* program = new AnimatedSprites14();
+	Rotation15* program = new Rotation15();
 	return program->Run();
 }

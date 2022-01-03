@@ -33,6 +33,7 @@
     <ClCompile Include="12_color_modulation.cpp" />
     <ClCompile Include="13_alpha_blending.cpp" />
     <ClCompile Include="14_animated_sprites.cpp" />
+    <ClCompile Include="15_rotation.cpp" />
     <ClCompile Include="lTexture.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mathUtils.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="12_color_modulation.h" />
     <ClInclude Include="13_alpha_blending.h" />
     <ClInclude Include="14_animated_sprites.h" />
+    <ClInclude Include="15_rotation.h" />
     <ClInclude Include="lTexture.h" />
     <ClInclude Include="mathUtils.h" />
     <ClInclude Include="sandSim.h" />
