@@ -1,6 +1,6 @@
-#include "15_rotation.h";
+#include "16_ttf.h";
 
 int main(int argc, char* args[]) {
-	Rotation15* program = new Rotation15();
+	Ttf16* program = new Ttf16();
 	return program->Run();
 }

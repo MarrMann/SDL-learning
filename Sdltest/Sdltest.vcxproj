@@ -34,6 +34,7 @@
     <ClCompile Include="13_alpha_blending.cpp" />
     <ClCompile Include="14_animated_sprites.cpp" />
     <ClCompile Include="15_rotation.cpp" />
+    <ClCompile Include="16_ttf.cpp" />
     <ClCompile Include="lTexture.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mathUtils.cpp" />
@@ -54,6 +55,7 @@
     <ClInclude Include="13_alpha_blending.h" />
     <ClInclude Include="14_animated_sprites.h" />
     <ClInclude Include="15_rotation.h" />
+    <ClInclude Include="16_ttf.h" />
     <ClInclude Include="lTexture.h" />
     <ClInclude Include="mathUtils.h" />
     <ClInclude Include="sandSim.h" />
@@ -170,7 +172,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

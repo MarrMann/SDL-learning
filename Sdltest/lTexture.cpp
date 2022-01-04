@@ -57,6 +57,44 @@ bool LTexture::loadFromFile(std::string path)
 	return _texture != NULL;
 }
 
+bool LTexture::loadFromRenderedText(std::string path, std::string textureText, SDL_Color textColor)
+{
+	//Get rid of preexisting texture
+	free();
+
+	_font = TTF_OpenFont(path.c_str(), 28);
+	if (_font == NULL) {
+		printf("Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError());
+		return false;
+	}
+
+	//Render text surface
+	SDL_Surface* textSurface = TTF_RenderText_Solid(_font, textureText.c_str(), textColor);
+	if (textSurface == NULL)
+	{
+		printf("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+		return false;
+	}
+
+	//Create texture from surface pixels
+	_texture = SDL_CreateTextureFromSurface(_renderer, textSurface);
+	if (_texture == NULL)
+	{
+		printf("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
+		return false;
+	}
+
+	//Get image dimensions
+	_width = textSurface->w;
+	_height = textSurface->h;
+
+	//Get rid of old surface
+	SDL_FreeSurface(textSurface);
+
+	//Return success
+	return _texture != NULL;
+}
+
 void LTexture::free()
 {
 	//Free texture if it exists
@@ -64,9 +102,14 @@ void LTexture::free()
 	{
 		SDL_DestroyTexture(_texture);
 		_texture = NULL;
-		_width = 0;
-		_height = 0;
 	}
+	if (_font != NULL) {
+		TTF_CloseFont(_font);
+		_font = NULL;
+	}
+
+	_width = 0;
+	_height = 0;
 }
 
 void LTexture::setColor(Uint8 r, Uint8 g, Uint8 b)

@@ -1,5 +1,6 @@
 #include <string>
 #include <SDL.h>
+#include <SDL_ttf.h>
 
 //Texture wrapper class
 class LTexture
@@ -13,6 +14,9 @@ public:
 
     //Loads image at specified path
     bool loadFromFile(std::string path);
+
+    //Creates image from font string
+    bool loadFromRenderedText(std::string path, std::string textureText, SDL_Color textColor);
 
     //Deallocates texture
     void free();
@@ -37,6 +41,7 @@ private:
     //The actual hardware texture
     SDL_Texture* _texture;
     SDL_Renderer* _renderer = NULL;
+    TTF_Font* _font = NULL;
 
     //Image dimensions
     int _width;

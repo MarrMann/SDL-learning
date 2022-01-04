@@ -72,6 +72,9 @@
     <ClCompile Include="15_rotation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="16_ttf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="02_image_on_screen.h">
@@ -123,6 +126,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="15_rotation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="16_ttf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
