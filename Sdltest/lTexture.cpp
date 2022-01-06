@@ -1,5 +1,4 @@
 #include "lTexture.h"
-#include <SDL_image.h>
 
 LTexture::LTexture(SDL_Renderer* renderer)
 {
@@ -57,6 +56,7 @@ bool LTexture::loadFromFile(std::string path)
 	return _texture != NULL;
 }
 
+#if defined(SDL_TTF_MAJOR_VERSION)
 bool LTexture::loadFromRenderedText(std::string path, std::string textureText, SDL_Color textColor)
 {
 	//Get rid of preexisting texture
@@ -94,6 +94,7 @@ bool LTexture::loadFromRenderedText(std::string path, std::string textureText, S
 	//Return success
 	return _texture != NULL;
 }
+#endif
 
 void LTexture::free()
 {
@@ -103,10 +104,13 @@ void LTexture::free()
 		SDL_DestroyTexture(_texture);
 		_texture = NULL;
 	}
+
+#if defined(SDL_TTF_MAJOR_VERSION)
 	if (_font != NULL) {
 		TTF_CloseFont(_font);
 		_font = NULL;
 	}
+#endif
 
 	_width = 0;
 	_height = 0;

@@ -1,6 +1,6 @@
-#include "16_ttf.h";
+#include "17_mouse_events.h";
 
 int main(int argc, char* args[]) {
-	Ttf16* program = new Ttf16();
+	MouseEvents17* program = new MouseEvents17();
 	return program->Run();
 }
