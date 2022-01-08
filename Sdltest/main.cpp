@@ -1,6 +1,6 @@
-#include "18_key_states.h";
+#include "19_gamepads.h";
 
 int main(int argc, char* args[]) {
-	KeyStates18* program = new KeyStates18();
+	Gamepads19* program = new Gamepads19();
 	return program->Run();
 }

@@ -84,6 +84,9 @@
     <ClCompile Include="18_key_states.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="19_gamepads.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="02_image_on_screen.h">
@@ -147,6 +150,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="18_key_states.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="19_gamepads.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
