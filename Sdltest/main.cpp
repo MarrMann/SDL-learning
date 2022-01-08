@@ -1,6 +1,6 @@
-#include "17_mouse_events.h";
+#include "18_key_states.h";
 
 int main(int argc, char* args[]) {
-	MouseEvents17* program = new MouseEvents17();
+	KeyStates18* program = new KeyStates18();
 	return program->Run();
 }
