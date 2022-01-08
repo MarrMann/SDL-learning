@@ -38,6 +38,7 @@
     <ClCompile Include="17_mouse_events.cpp" />
     <ClCompile Include="18_key_states.cpp" />
     <ClCompile Include="19_gamepads.cpp" />
+    <ClCompile Include="20_haptics.cpp" />
     <ClCompile Include="LButton.cpp" />
     <ClCompile Include="lTexture.cpp" />
     <ClCompile Include="main.cpp" />
@@ -63,6 +64,7 @@
     <ClInclude Include="17_mouse_events.h" />
     <ClInclude Include="18_key_states.h" />
     <ClInclude Include="19_gamepads.h" />
+    <ClInclude Include="20_haptics.h" />
     <ClInclude Include="LButton.h" />
     <ClInclude Include="lTexture.h" />
     <ClInclude Include="mathUtils.h" />

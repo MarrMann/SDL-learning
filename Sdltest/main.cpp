@@ -1,6 +1,6 @@
-#include "19_gamepads.h";
+#include "20_haptics.h";
 
 int main(int argc, char* args[]) {
-	Gamepads19* program = new Gamepads19();
+	Haptics20* program = new Haptics20();
 	return program->Run();
 }
