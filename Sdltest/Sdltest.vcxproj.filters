@@ -90,6 +90,9 @@
     <ClCompile Include="20_haptics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="21_sfx_and_music.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="02_image_on_screen.h">
@@ -159,6 +162,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="20_haptics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="21_sfx_and_music.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

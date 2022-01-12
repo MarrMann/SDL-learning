@@ -1,6 +1,6 @@
-#include "20_haptics.h";
+#include "21_sfx_and_music.h";
 
 int main(int argc, char* args[]) {
-	Haptics20* program = new Haptics20();
+	SfxAndMusic21* program = new SfxAndMusic21();
 	return program->Run();
 }
