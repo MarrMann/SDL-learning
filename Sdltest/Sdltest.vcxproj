@@ -40,6 +40,7 @@
     <ClCompile Include="19_gamepads.cpp" />
     <ClCompile Include="20_haptics.cpp" />
     <ClCompile Include="21_sfx_and_music.cpp" />
+    <ClCompile Include="22_timing.cpp" />
     <ClCompile Include="LButton.cpp" />
     <ClCompile Include="lTexture.cpp" />
     <ClCompile Include="main.cpp" />
@@ -67,6 +68,7 @@
     <ClInclude Include="19_gamepads.h" />
     <ClInclude Include="20_haptics.h" />
     <ClInclude Include="21_sfx_and_music.h" />
+    <ClInclude Include="22_timing.h" />
     <ClInclude Include="LButton.h" />
     <ClInclude Include="lTexture.h" />
     <ClInclude Include="mathUtils.h" />

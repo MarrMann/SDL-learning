@@ -1,6 +1,6 @@
-#include "21_sfx_and_music.h";
+#include "22_timing.h";
 
 int main(int argc, char* args[]) {
-	SfxAndMusic21* program = new SfxAndMusic21();
+	Timing22* program = new Timing22();
 	return program->Run();
 }

@@ -60,11 +60,24 @@ bool LTexture::loadFromFile(std::string path)
 bool LTexture::loadFromRenderedText(std::string path, std::string textureText, SDL_Color textColor)
 {
 	//Get rid of preexisting texture
-	free();
+	free(true);
 
 	_font = TTF_OpenFont(path.c_str(), 28);
 	if (_font == NULL) {
 		printf("Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError());
+		return false;
+	}
+
+	return loadFromRenderedText(textureText, textColor);
+}
+
+bool LTexture::loadFromRenderedText(std::string textureText, SDL_Color textColor)
+{
+	//Get rid of preexisting texture
+	free();
+
+	if (_font == NULL) {
+		printf("Cannot render a texture with no font.\n");
 		return false;
 	}
 
@@ -96,7 +109,7 @@ bool LTexture::loadFromRenderedText(std::string path, std::string textureText, S
 }
 #endif
 
-void LTexture::free()
+void LTexture::free(bool freeFont)
 {
 	//Free texture if it exists
 	if (_texture != NULL)
@@ -106,7 +119,7 @@ void LTexture::free()
 	}
 
 #if defined(SDL_TTF_MAJOR_VERSION)
-	if (_font != NULL) {
+	if (_font != NULL && freeFont) {
 		TTF_CloseFont(_font);
 		_font = NULL;
 	}

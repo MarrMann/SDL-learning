@@ -23,10 +23,11 @@ public:
 #if defined(SDL_TTF_MAJOR_VERSION)
     //Creates image from font string
     bool loadFromRenderedText(std::string path, std::string textureText, SDL_Color textColor);
+    bool loadFromRenderedText(std::string textureText, SDL_Color textColor);
 #endif
 
     //Deallocates texture
-    void free();
+    void free(bool freeFont = false);
 
     //Set color modulation
     void setColor(Uint8 r, Uint8 g, Uint8 b);

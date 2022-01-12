@@ -93,6 +93,9 @@
     <ClCompile Include="21_sfx_and_music.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="22_timing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="02_image_on_screen.h">
@@ -165,6 +168,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="21_sfx_and_music.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="22_timing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
