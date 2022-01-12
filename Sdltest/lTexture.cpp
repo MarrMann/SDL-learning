@@ -12,7 +12,7 @@ LTexture::LTexture(SDL_Renderer* renderer)
 LTexture::~LTexture()
 {
 	//Deallocate
-	free();
+	free(true);
 }
 
 bool LTexture::loadFromFile(std::string path)
