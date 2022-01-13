@@ -1,6 +1,6 @@
-#include "22_timing.h";
+#include "23_advanced_timing.h";
 
 int main(int argc, char* args[]) {
-	Timing22* program = new Timing22();
+	AdvancedTiming23* program = new AdvancedTiming23();
 	return program->Run();
 }

@@ -41,8 +41,10 @@
     <ClCompile Include="20_haptics.cpp" />
     <ClCompile Include="21_sfx_and_music.cpp" />
     <ClCompile Include="22_timing.cpp" />
+    <ClCompile Include="23_advanced_timing.cpp" />
     <ClCompile Include="LButton.cpp" />
     <ClCompile Include="lTexture.cpp" />
+    <ClCompile Include="LTimer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mathUtils.cpp" />
     <ClCompile Include="sandSim.cpp" />
@@ -69,8 +71,10 @@
     <ClInclude Include="20_haptics.h" />
     <ClInclude Include="21_sfx_and_music.h" />
     <ClInclude Include="22_timing.h" />
+    <ClInclude Include="23_advanced_timing.h" />
     <ClInclude Include="LButton.h" />
     <ClInclude Include="lTexture.h" />
+    <ClInclude Include="LTimer.h" />
     <ClInclude Include="mathUtils.h" />
     <ClInclude Include="sandSim.h" />
   </ItemGroup>
