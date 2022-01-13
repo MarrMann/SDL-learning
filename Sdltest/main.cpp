@@ -1,6 +1,6 @@
-#include "23_advanced_timing.h";
+#include "24_framerate.h";
 
 int main(int argc, char* args[]) {
-	AdvancedTiming23* program = new AdvancedTiming23();
+	Framerate24* program = new Framerate24();
 	return program->Run();
 }

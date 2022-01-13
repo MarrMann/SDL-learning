@@ -42,6 +42,7 @@
     <ClCompile Include="21_sfx_and_music.cpp" />
     <ClCompile Include="22_timing.cpp" />
     <ClCompile Include="23_advanced_timing.cpp" />
+    <ClCompile Include="24_framerate.cpp" />
     <ClCompile Include="LButton.cpp" />
     <ClCompile Include="lTexture.cpp" />
     <ClCompile Include="LTimer.cpp" />
@@ -72,6 +73,7 @@
     <ClInclude Include="21_sfx_and_music.h" />
     <ClInclude Include="22_timing.h" />
     <ClInclude Include="23_advanced_timing.h" />
+    <ClInclude Include="24_framerate.h" />
     <ClInclude Include="LButton.h" />
     <ClInclude Include="lTexture.h" />
     <ClInclude Include="LTimer.h" />
