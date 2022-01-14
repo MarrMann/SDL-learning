@@ -1,6 +1,6 @@
-#include "24_framerate.h";
+#include "25_capping_framerate.h";
 
 int main(int argc, char* args[]) {
-	Framerate24* program = new Framerate24();
+	CappingFramerate25* program = new CappingFramerate25();
 	return program->Run();
 }
