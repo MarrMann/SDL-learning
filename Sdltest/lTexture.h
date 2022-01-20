@@ -1,11 +1,10 @@
 #include <string>
 #include <SDL.h>
 #include <SDL_image.h>
-#include <SDL_ttf.h>1
+#include <SDL_ttf.h>
 
 #ifndef LTEXTURE
 #define LTEXTURE
-#endif // !LTEXTURE
 
 //Texture wrapper class
 class LTexture
@@ -57,3 +56,5 @@ private:
     int _width;
     int _height;
 };
+
+#endif // !LTEXTURE

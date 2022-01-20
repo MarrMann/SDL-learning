@@ -44,11 +44,13 @@
     <ClCompile Include="23_advanced_timing.cpp" />
     <ClCompile Include="24_framerate.cpp" />
     <ClCompile Include="25_capping_framerate.cpp" />
+    <ClCompile Include="Dot.cpp" />
     <ClCompile Include="LButton.cpp" />
     <ClCompile Include="lTexture.cpp" />
     <ClCompile Include="LTimer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mathUtils.cpp" />
+    <ClCompile Include="26_motion.cpp" />
     <ClCompile Include="sandSim.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +78,8 @@
     <ClInclude Include="23_advanced_timing.h" />
     <ClInclude Include="24_framerate.h" />
     <ClInclude Include="25_capping_framerate.h" />
+    <ClInclude Include="26_motion.h" />
+    <ClInclude Include="Dot.h" />
     <ClInclude Include="LButton.h" />
     <ClInclude Include="lTexture.h" />
     <ClInclude Include="LTimer.h" />

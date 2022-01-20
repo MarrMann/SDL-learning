@@ -1,6 +1,6 @@
-#include "25_capping_framerate.h";
+#include "26_motion.h";
 
 int main(int argc, char* args[]) {
-	CappingFramerate25* program = new CappingFramerate25();
+	Motion26* program = new Motion26();
 	return program->Run();
 }
