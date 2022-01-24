@@ -1,10 +1,15 @@
-#include "26_motion.h"
+#include "27_collision_detection.h"
 
-Motion26::Motion26() {
+CollisionDetection27::CollisionDetection27() {
     _dot = new Dot();
+    _wall = new SDL_Rect();
+    _wall->x = 300;
+    _wall->y = 40;
+    _wall->w = 40;
+    _wall->h = 400;
 }
 
-int Motion26::Run()
+int CollisionDetection27::Run()
 {
     //Startup SDL and create window
     if (!init()) {
@@ -26,7 +31,7 @@ int Motion26::Run()
     return 0;
 }
 
-bool Motion26::init()
+bool CollisionDetection27::init()
 {
     //Init SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -59,7 +64,7 @@ bool Motion26::init()
     _screenSurface = SDL_GetWindowSurface(_window);
 
     //Create renderer
-    _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED);
+    _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (_renderer == NULL)
     {
         printf("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -71,16 +76,18 @@ bool Motion26::init()
     return true;
 }
 
-void Motion26::render()
+void CollisionDetection27::render()
 {
+    //Move objets
+    _dot->move(*_wall);
+
     //Clear screen
     SDL_SetRenderDrawColor(_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     SDL_RenderClear(_renderer);
 
-    SDL_Rect* tempWall = new SDL_Rect();
-
-    //Move objets
-    _dot->move(*tempWall);
+    //Render wall
+    SDL_SetRenderDrawColor(_renderer, 0x00, 0x00, 0x00, 0xFF);
+    SDL_RenderDrawRect(_renderer, _wall);
 
     //Render texture
     _dot->render();
@@ -89,7 +96,7 @@ void Motion26::render()
     SDL_RenderPresent(_renderer);
 }
 
-void Motion26::processEvents()
+void CollisionDetection27::processEvents()
 {
     SDL_Event e;
     while (SDL_PollEvent(&e) != 0) {
@@ -109,7 +116,7 @@ void Motion26::processEvents()
     }
 }
 
-bool Motion26::loadMedia()
+bool CollisionDetection27::loadMedia()
 {
     if (!_dotTexture->loadFromFile("26/dot.bmp")) {
         printf("Failed to load dot texture\n");
@@ -120,7 +127,7 @@ bool Motion26::loadMedia()
     return true;
 }
 
-void Motion26::close()
+void CollisionDetection27::close()
 {
     //Destroy window
     SDL_DestroyRenderer(_renderer);

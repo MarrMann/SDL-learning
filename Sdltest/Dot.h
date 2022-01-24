@@ -1,5 +1,6 @@
 #include <SDL_events.h>
 #include "lTexture.h"
+#include "Utils.h"
 
 #ifndef DOT
 #define DOT
@@ -12,7 +13,7 @@ public:
     static const int DOT_HEIGHT = 20;
 
     //Maximum axis velocity of the dot
-    static const int MAX_VEL = 1;
+    static const int MAX_VEL = 10;
 
     //Initializes the variables
     Dot();
@@ -26,7 +27,7 @@ public:
     void handleEvent(SDL_Event& e);
 
     //Moves the dot
-    void move();
+    void move(SDL_Rect& wall);
 
     //Shows the dot on the screen
     void render();
@@ -37,6 +38,9 @@ private:
 
     //The current velocity of the dot
     int _velX, _velY;
+
+    //The dot's collider
+    SDL_Rect _collider;
 
     LTexture* _texture;
 };

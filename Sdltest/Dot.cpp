@@ -12,6 +12,10 @@ Dot::Dot()
     _velX = 0;
     _velY = 0;
 
+    //Init collider
+    _collider.w = DOT_WIDTH;
+    _collider.h = DOT_HEIGHT;
+
     //Init texture
     _texture = NULL;
 }
@@ -59,18 +63,24 @@ void Dot::handleEvent(SDL_Event& e)
     }
 }
 
-void Dot::move()
+void Dot::move(SDL_Rect& wall)
 {
     //Move the dot
     _posX += _velX;
-    _posY += _velY;
+    _collider.x = _posX;
 
     //If the dot moves too far, move it back
-    if ((_posX < 0) || (_posX + DOT_WIDTH > Motion26::SCREEN_WIDTH)) {
+    if ((_posX < 0) || (_posX + DOT_WIDTH > Motion26::SCREEN_WIDTH) || Utils::checkCollision(_collider, wall)) {
         _posX -= _velX;
+        _collider.x = _posX;
     }
-    if ((_posY < 0) || (_posY + DOT_HEIGHT > Motion26::SCREEN_HEIGHT)) {
+
+    _posY += _velY;
+    _collider.y = _posY;
+
+    if ((_posY < 0) || (_posY + DOT_HEIGHT > Motion26::SCREEN_HEIGHT) || Utils::checkCollision(_collider, wall)) {
         _posY -= _velY;
+        _collider.y = _posY;
     }
 }
 
