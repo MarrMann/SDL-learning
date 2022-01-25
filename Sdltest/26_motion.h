@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string>
 #include <sstream>
+#include <vector>
 #include "lTexture.h"
 #include "Dot.h"
 

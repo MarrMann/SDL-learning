@@ -1,15 +1,12 @@
-#include "27_collision_detection.h"
+#include "28_per_pixel_collision.h"
 
-CollisionDetection27::CollisionDetection27() {
-    _dot = new Dot();
-    _wall = new SDL_Rect();
-    _wall->x = 300;
-    _wall->y = 40;
-    _wall->w = 40;
-    _wall->h = 400;
+PerPixelCollision28::PerPixelCollision28() {
+    _dot = new Dot(0, 0);
+    _otherDot = new Dot(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4);
+    _dotTexture = NULL;
 }
 
-int CollisionDetection27::Run()
+int PerPixelCollision28::Run()
 {
     //Startup SDL and create window
     if (!init()) {
@@ -31,7 +28,7 @@ int CollisionDetection27::Run()
     return 0;
 }
 
-bool CollisionDetection27::init()
+bool PerPixelCollision28::init()
 {
     //Init SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -76,30 +73,24 @@ bool CollisionDetection27::init()
     return true;
 }
 
-void CollisionDetection27::render()
+void PerPixelCollision28::render()
 {
-    std::vector<SDL_Rect> colliders;
-    colliders.push_back(*_wall);
-
     //Move objets
-    _dot->move(colliders);
+    _dot->move(_otherDot->getColliders());
 
     //Clear screen
     SDL_SetRenderDrawColor(_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     SDL_RenderClear(_renderer);
 
-    //Render wall
-    SDL_SetRenderDrawColor(_renderer, 0x00, 0x00, 0x00, 0xFF);
-    SDL_RenderDrawRect(_renderer, _wall);
-
     //Render texture
     _dot->render();
+    _otherDot->render();
 
     //Update screen
     SDL_RenderPresent(_renderer);
 }
 
-void CollisionDetection27::processEvents()
+void PerPixelCollision28::processEvents()
 {
     SDL_Event e;
     while (SDL_PollEvent(&e) != 0) {
@@ -119,18 +110,19 @@ void CollisionDetection27::processEvents()
     }
 }
 
-bool CollisionDetection27::loadMedia()
+bool PerPixelCollision28::loadMedia()
 {
     if (!_dotTexture->loadFromFile("26/dot.bmp")) {
         printf("Failed to load dot texture\n");
         return false;
     }
     _dot->setTexture(_dotTexture);
+    _otherDot->setTexture(_dotTexture);
 
     return true;
 }
 
-void CollisionDetection27::close()
+void PerPixelCollision28::close()
 {
     //Destroy window
     SDL_DestroyRenderer(_renderer);

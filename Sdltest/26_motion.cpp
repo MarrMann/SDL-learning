@@ -78,9 +78,11 @@ void Motion26::render()
     SDL_RenderClear(_renderer);
 
     SDL_Rect* tempWall = new SDL_Rect();
+    std::vector<SDL_Rect> colliders;
+    colliders.push_back(*tempWall);
 
     //Move objets
-    _dot->move(*tempWall);
+    _dot->move(colliders);
 
     //Render texture
     _dot->render();

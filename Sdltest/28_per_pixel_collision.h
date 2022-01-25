@@ -5,14 +5,13 @@
 #include <stdio.h>
 #include <string>
 #include <sstream>
-#include <vector>
 #include "lTexture.h"
 #include "Dot.h"
 
-class CollisionDetection27 {
+class PerPixelCollision28 {
 
 public:
-    CollisionDetection27();
+    PerPixelCollision28();
     int Run();
 
     //Windows size
@@ -40,7 +39,7 @@ private:
 
     //Objects
     Dot* _dot;
-    SDL_Rect* _wall;
+    Dot* _otherDot;
 
     //Textures
     LTexture* _dotTexture;

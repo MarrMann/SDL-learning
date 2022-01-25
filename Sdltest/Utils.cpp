@@ -1,5 +1,18 @@
 #include "Utils.h"
 
+bool Utils::checkCollision(std::vector<SDL_Rect>& a, std::vector<SDL_Rect>& b)
+{
+    //Check collision between all rects
+    for (SDL_Rect& rectA : a) {
+        for (SDL_Rect& rectB : b) {
+            if (checkCollision(rectA, rectB)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 bool Utils::checkCollision(SDL_Rect a, SDL_Rect b)
 {
     //The sizes of the rects
@@ -21,20 +34,8 @@ bool Utils::checkCollision(SDL_Rect a, SDL_Rect b)
     bottomB = b.y + b.h;
 
     //If any of the sides of A are outside B
-    if (bottomA <= topB) {
-        return false;
+    if (((bottomA <= topB) || (topA >= bottomB) || (rightA <= leftB) || (leftA >= rightB)) == false) {
+        return true;
     }
-    if (topA >= bottomB) {
-        return false;
-    }
-    if (rightA <= leftB) {
-        return false;
-    }
-    if (leftA >= rightB) {
-        return false;
-    }
-    return true;
-
-
     return false;
 }
