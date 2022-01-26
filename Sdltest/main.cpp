@@ -1,6 +1,6 @@
-#include "28_per_pixel_collision.h";
+#include "29_circular_collision.h";
 
 int main(int argc, char* args[]) {
-	PerPixelCollision28* program = new PerPixelCollision28();
+	CircularCollision29* program = new CircularCollision29();
 	return program->Run();
 }

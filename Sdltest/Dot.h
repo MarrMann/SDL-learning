@@ -6,6 +6,12 @@
 #ifndef DOT
 #define DOT
 
+struct Circle
+{
+    int x, y;
+    int r;
+};
+
 class Dot
 {
 public:
@@ -29,14 +35,17 @@ public:
     //Takes key presses and adjusts the dots velocity
     void handleEvent(SDL_Event& e);
 
-    //Moves the dot
-    void move(std::vector<SDL_Rect>& otherColliders);
+    //Moves the dot and checks collision
+    void move(SDL_Rect& square, Circle& circle);
 
     //Shows the dot on the screen
     void render();
 
     //Gets the collision boxes
     std::vector<SDL_Rect>& getColliders();
+
+    //Gets collision circle
+    Circle& getCollider();
 
 private:
     //The current X and Y offset of the dot
@@ -47,6 +56,9 @@ private:
 
     //The dot's collider
     std::vector<SDL_Rect> _colliders;
+
+    //The dot's collision circle
+    Circle _collider;
 
     //Moves the collision boxes relative to the dot's offset
     void shiftColliders();

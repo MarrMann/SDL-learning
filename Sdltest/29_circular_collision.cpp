@@ -1,7 +1,10 @@
-#include "27_collision_detection.h"
+#include "29_circular_collision.h"
 
-CollisionDetection27::CollisionDetection27() {
-    _dot = new Dot();
+CircularCollision29::CircularCollision29() {
+    _dot = new Dot(Dot::DOT_WIDTH / 2, Dot::DOT_HEIGHT / 2);
+    _otherDot = new Dot(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4);
+    _dotTexture = NULL;
+
     _wall = new SDL_Rect();
     _wall->x = 300;
     _wall->y = 40;
@@ -9,7 +12,7 @@ CollisionDetection27::CollisionDetection27() {
     _wall->h = 400;
 }
 
-int CollisionDetection27::Run()
+int CircularCollision29::Run()
 {
     //Startup SDL and create window
     if (!init()) {
@@ -31,7 +34,7 @@ int CollisionDetection27::Run()
     return 0;
 }
 
-bool CollisionDetection27::init()
+bool CircularCollision29::init()
 {
     //Init SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -76,14 +79,10 @@ bool CollisionDetection27::init()
     return true;
 }
 
-void CollisionDetection27::render()
+void CircularCollision29::render()
 {
-    std::vector<SDL_Rect> colliders;
-    colliders.push_back(*_wall);
-
     //Move objets
-    // Superceded by lesson 29
-    //_dot->move(colliders);
+    _dot->move(*_wall, _otherDot->getCollider());
 
     //Clear screen
     SDL_SetRenderDrawColor(_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -95,12 +94,13 @@ void CollisionDetection27::render()
 
     //Render texture
     _dot->render();
+    _otherDot->render();
 
     //Update screen
     SDL_RenderPresent(_renderer);
 }
 
-void CollisionDetection27::processEvents()
+void CircularCollision29::processEvents()
 {
     SDL_Event e;
     while (SDL_PollEvent(&e) != 0) {
@@ -120,18 +120,19 @@ void CollisionDetection27::processEvents()
     }
 }
 
-bool CollisionDetection27::loadMedia()
+bool CircularCollision29::loadMedia()
 {
     if (!_dotTexture->loadFromFile("26/dot.bmp")) {
         printf("Failed to load dot texture\n");
         return false;
     }
     _dot->setTexture(_dotTexture);
+    _otherDot->setTexture(_dotTexture);
 
     return true;
 }
 
-void CollisionDetection27::close()
+void CircularCollision29::close()
 {
     //Destroy window
     SDL_DestroyRenderer(_renderer);

@@ -46,6 +46,7 @@
     <ClCompile Include="25_capping_framerate.cpp" />
     <ClCompile Include="27_collision_detection.cpp" />
     <ClCompile Include="28_per_pixel_collision.cpp" />
+    <ClCompile Include="29_circular_collision.cpp" />
     <ClCompile Include="Dot.cpp" />
     <ClCompile Include="LButton.cpp" />
     <ClCompile Include="lTexture.cpp" />
@@ -84,6 +85,7 @@
     <ClInclude Include="26_motion.h" />
     <ClInclude Include="27_collision_detection.h" />
     <ClInclude Include="28_per_pixel_collision.h" />
+    <ClInclude Include="29_circular_collision.h" />
     <ClInclude Include="Dot.h" />
     <ClInclude Include="LButton.h" />
     <ClInclude Include="lTexture.h" />

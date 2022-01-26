@@ -82,7 +82,8 @@ void Motion26::render()
     colliders.push_back(*tempWall);
 
     //Move objets
-    _dot->move(colliders);
+    // Superceded by lesson 29
+    //_dot->move(colliders);
 
     //Render texture
     _dot->render();

@@ -10,46 +10,12 @@ Dot::Dot(int x, int y)
     _posX = x;
     _posY = y;
 
+    //Init collider
+    _collider.r = DOT_WIDTH / 2;
+
     //Init velocity
     _velX = 0;
     _velY = 0;
-
-    //Create the necessary rects
-    _colliders.resize(11);
-
-    //Initialize the collision boxes' width and height
-    _colliders[0].w = 6;
-    _colliders[0].h = 1;
-
-    _colliders[1].w = 10;
-    _colliders[1].h = 1;
-
-    _colliders[2].w = 14;
-    _colliders[2].h = 1;
-
-    _colliders[3].w = 16;
-    _colliders[3].h = 2;
-
-    _colliders[4].w = 18;
-    _colliders[4].h = 2;
-
-    _colliders[5].w = 20;
-    _colliders[5].h = 6;
-
-    _colliders[6].w = 18;
-    _colliders[6].h = 2;
-
-    _colliders[7].w = 16;
-    _colliders[7].h = 2;
-
-    _colliders[8].w = 14;
-    _colliders[8].h = 1;
-
-    _colliders[9].w = 10;
-    _colliders[9].h = 1;
-
-    _colliders[10].w = 6;
-    _colliders[10].h = 1;
 
     //Initialize colliders relative to position
     shiftColliders();
@@ -73,7 +39,6 @@ void Dot::handleEvent(SDL_Event& e)
     //If a key was pressed
     if (e.key.repeat == 0) {
         if (e.type == SDL_KEYDOWN) {
-            std::cout << "Key down!\n";
             //Adjust velocity
             switch (e.key.keysym.sym)
             {
@@ -86,7 +51,6 @@ void Dot::handleEvent(SDL_Event& e)
             }
         }
         else if (e.type == SDL_KEYUP) {
-            std::cout << "Key up!\n";
             //Adjust velocity
             switch (e.key.keysym.sym)
             {
@@ -101,25 +65,22 @@ void Dot::handleEvent(SDL_Event& e)
     }
 }
 
-void Dot::move(std::vector<SDL_Rect>& otherColliders)
+void Dot::move(SDL_Rect& square, Circle& circle)
 {
     //Move the dot
     _posX += _velX;
-    std::cout << _posX;
     shiftColliders();
 
     //If the dot moves too far, move it back
-    if ((_posX < 0) || (_posX + DOT_WIDTH > Motion26::SCREEN_WIDTH) || Utils::checkCollision(_colliders, otherColliders)) {
+    if ((_posX < 0) || (_posX + DOT_WIDTH > Motion26::SCREEN_WIDTH) || Utils::checkCollision(_collider, square) || Utils::checkCollision(_collider, circle)) {
         _posX -= _velX;
         shiftColliders();
     }
 
-    std::cout << " " << _posX << std::endl;
-
     _posY += _velY;
     shiftColliders();
 
-    if ((_posY < 0) || (_posY + DOT_HEIGHT > Motion26::SCREEN_HEIGHT) || Utils::checkCollision(_colliders, otherColliders)) {
+    if ((_posY < 0) || (_posY + DOT_HEIGHT > Motion26::SCREEN_HEIGHT) || Utils::checkCollision(_collider, square) || Utils::checkCollision(_collider, circle)) {
         _posY -= _velY;
         shiftColliders();
     }
@@ -127,7 +88,7 @@ void Dot::move(std::vector<SDL_Rect>& otherColliders)
 
 void Dot::render()
 {
-    _texture->render(_posX, _posY);
+    _texture->render(_posX - _collider.r, _posY - _collider.r);
 }
 
 std::vector<SDL_Rect>& Dot::getColliders()
@@ -135,20 +96,13 @@ std::vector<SDL_Rect>& Dot::getColliders()
     return _colliders;
 }
 
+Circle& Dot::getCollider()
+{
+    return _collider;
+}
+
 void Dot::shiftColliders()
 {
-    //The row offset
-    int r = 0;
-
-    //Go through the dot's collision boxes
-    for (int i = 0; i < _colliders.size(); i++) {
-        //Center the collision box
-        _colliders[i].x = _posX + (DOT_WIDTH - _colliders[i].w) / 2;
-
-        //Set the collision box at its row offset
-        _colliders[i].y = _posY + r;
-
-        //Move the row offset down the height of the collision box
-        r += _colliders[i].h;
-    }
+    _collider.x = _posX;
+    _collider.y = _posY;
 }

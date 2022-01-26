@@ -76,7 +76,8 @@ bool PerPixelCollision28::init()
 void PerPixelCollision28::render()
 {
     //Move objets
-    _dot->move(_otherDot->getColliders());
+    // Superceded by lesson 29
+    //_dot->move(_otherDot->getColliders());
 
     //Clear screen
     SDL_SetRenderDrawColor(_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
