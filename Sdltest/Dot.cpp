@@ -1,5 +1,5 @@
 #include "Dot.h"
-#include "26_motion.h"
+#include "30_scrolling.h"
 #include <iostream>
 
 Dot::Dot() : Dot(0, 0) { }
@@ -65,6 +65,23 @@ void Dot::handleEvent(SDL_Event& e)
     }
 }
 
+void Dot::move()
+{
+    //Move the dot
+    _posX += _velX;
+
+    //If the dot moves too far, move it back
+    if ((_posX < 0) || (_posX + DOT_WIDTH > Scrolling30::LEVEL_WIDTH)) {
+        _posX -= _velX;
+    }
+
+    _posY += _velY;
+
+    if ((_posY < 0) || (_posY + DOT_HEIGHT > Scrolling30::LEVEL_HEIGHT)) {
+        _posY -= _velY;
+    }
+}
+
 void Dot::move(SDL_Rect& square, Circle& circle)
 {
     //Move the dot
@@ -72,7 +89,7 @@ void Dot::move(SDL_Rect& square, Circle& circle)
     shiftColliders();
 
     //If the dot moves too far, move it back
-    if ((_posX < 0) || (_posX + DOT_WIDTH > Motion26::SCREEN_WIDTH) || Utils::checkCollision(_collider, square) || Utils::checkCollision(_collider, circle)) {
+    if ((_posX < 0) || (_posX + DOT_WIDTH > Scrolling30::LEVEL_WIDTH) || Utils::checkCollision(_collider, square) || Utils::checkCollision(_collider, circle)) {
         _posX -= _velX;
         shiftColliders();
     }
@@ -80,7 +97,7 @@ void Dot::move(SDL_Rect& square, Circle& circle)
     _posY += _velY;
     shiftColliders();
 
-    if ((_posY < 0) || (_posY + DOT_HEIGHT > Motion26::SCREEN_HEIGHT) || Utils::checkCollision(_collider, square) || Utils::checkCollision(_collider, circle)) {
+    if ((_posY < 0) || (_posY + DOT_HEIGHT > Scrolling30::LEVEL_HEIGHT) || Utils::checkCollision(_collider, square) || Utils::checkCollision(_collider, circle)) {
         _posY -= _velY;
         shiftColliders();
     }
@@ -88,7 +105,14 @@ void Dot::move(SDL_Rect& square, Circle& circle)
 
 void Dot::render()
 {
-    _texture->render(_posX - _collider.r, _posY - _collider.r);
+    //Show the dot relative to the camera
+    render(0, 0);
+}
+
+void Dot::render(int camX, int camY)
+{
+    //Show the dot relative to the camera
+    _texture->render(_posX - camX, _posY - camY);
 }
 
 std::vector<SDL_Rect>& Dot::getColliders()
@@ -99,6 +123,16 @@ std::vector<SDL_Rect>& Dot::getColliders()
 Circle& Dot::getCollider()
 {
     return _collider;
+}
+
+int Dot::getPosX()
+{
+    return _posX;
+}
+
+int Dot::getPosY()
+{
+    return _posY;
 }
 
 void Dot::shiftColliders()

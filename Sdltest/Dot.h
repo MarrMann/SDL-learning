@@ -20,7 +20,7 @@ public:
     static const int DOT_HEIGHT = 20;
 
     //Maximum axis velocity of the dot
-    static const int MAX_VEL = 1;
+    static const int MAX_VEL = 10;
 
     //Initializes the variables
     Dot();
@@ -36,16 +36,22 @@ public:
     void handleEvent(SDL_Event& e);
 
     //Moves the dot and checks collision
+    void move();
     void move(SDL_Rect& square, Circle& circle);
 
     //Shows the dot on the screen
     void render();
+    void render(int camX, int camY);
 
     //Gets the collision boxes
     std::vector<SDL_Rect>& getColliders();
 
     //Gets collision circle
     Circle& getCollider();
+
+    //Position accessors
+    int getPosX();
+    int getPosY();
 
 private:
     //The current X and Y offset of the dot

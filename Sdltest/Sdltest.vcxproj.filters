@@ -126,6 +126,9 @@
     <ClCompile Include="29_circular_collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="30_scrolling.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="02_image_on_screen.h">
@@ -231,6 +234,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="29_circular_collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="30_scrolling.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

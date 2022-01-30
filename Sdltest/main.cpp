@@ -1,6 +1,6 @@
-#include "29_circular_collision.h";
+#include "30_scrolling.h";
 
 int main(int argc, char* args[]) {
-	CircularCollision29* program = new CircularCollision29();
+	Scrolling30* program = new Scrolling30();
 	return program->Run();
 }
