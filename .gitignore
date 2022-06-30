@@ -12,7 +12,8 @@
 x64/
 x86/
 bld/
-[Bb]in/
+[Bb]uild/
+# [Bb]in/ - want to include this to make building on other devices simpler
 [Oo]bj/
 [Ll]og/
 

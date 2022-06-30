@@ -133,13 +133,13 @@ void Scrolling30::processEvents()
 
 bool Scrolling30::loadMedia()
 {
-    if (!_dotTexture->loadFromFile("26/dot.bmp")) {
+    if (!_dotTexture->loadFromFile("resources/26/dot.bmp")) {
         printf("Failed to load dot texture\n");
         return false;
     }
     _dot->setTexture(_dotTexture);
 
-    if (!_bgTexture->loadFromFile("30/bg.png")) {
+    if (!_bgTexture->loadFromFile("resources/30/bg.png")) {
         printf("failed to load bg texture");
         return false;
     }
