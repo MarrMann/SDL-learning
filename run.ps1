@@ -4,7 +4,7 @@ Write-Host "Building..." -ForegroundColor Green
 Invoke-Expression "cmake --build ./build"
 
 Write-Host "Copying resources..." -ForegroundColor Green
-Copy-Item -Path "./resources" -Destination "./build/Debug/resources" -Recurse -Force
+Copy-Item -Path "./resources" -Destination "./build/Debug/" -Recurse -Force
 Write-Host "Copying binaries..." -ForegroundColor Green
 Copy-Item -Path "./bin/*" -Destination "./build/Debug" -Recurse
 
